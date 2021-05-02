@@ -61,5 +61,32 @@ namespace Presentacion
 
             }
         }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            if (articulo == null)
+            {
+                articulo = new Articulo();
+            }
+            articulo.Codigo = txtCodigo.Text;
+            articulo.Nombre = txtNombre.Text;
+            articulo.Descripcion = txtDescripcion.Text;
+            articulo.Marca = (Marca)CBMarca.SelectedItem;
+            articulo.Categoria = (Categoria)CBCategoria.SelectedItem;
+            articulo.UrlImage = txtUrlImage.Text;
+            articulo.Precio = Convert.ToDecimal(txtPrecio.Text);
+            if (articulo.id == 0)
+            {
+                negocio.agregar(articulo);
+            }
+            else
+            {
+                negocio.modificar(articulo);
+            }
+
+            MessageBox.Show("Operacion exitosa!");
+            Close();
+        }
     }
 }

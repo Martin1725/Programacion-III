@@ -59,9 +59,35 @@ namespace Presentacion
             cargar();
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void btnAgregar_Click_1(object sender, EventArgs e)
         {
+            FmrAlta alta = new FmrAlta();
+            alta.ShowDialog();
+            cargar();
+        }
 
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Seguro que desea borrar el Articulo", "Message", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                ArticuloNegocio articulo = new ArticuloNegocio();
+                articulo.Eliminar(((Articulo)dgvLista.CurrentRow.DataBoundItem).id);
+            }
+            cargar();
+        }
+
+        private void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            if (txtFiltro.Text == "")
+            {
+                dgvLista.DataSource = listaOriginal;
+            }
+            else
+            {
+                List<Articulo> listaFiltrada = listaOriginal.FindAll(x => x.Nombre.ToUpper().Contains(txtFiltro.Text.ToUpper()) || x.Descripcion.ToUpper().Contains(txtFiltro.Text.ToUpper()));
+
+                dgvLista.DataSource = listaFiltrada;
+            }
         }
     }
 }
